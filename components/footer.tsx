@@ -64,7 +64,7 @@ export default function FooterSection() {
                 </div>
                 <div className="w-full mt-8">
                     <span className="block text-center text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} Nubis, all rights reserved.
+                        © 2025 Nubis, all rights reserved.
                     </span>
                 </div>
             </div>
