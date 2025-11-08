@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 const navLinks = [
-    { title: 'Home', href: '#' },
+    { title: 'Home', href: '/' },
     { title: 'Documentation', href: 'https://docs.usenubis.com' },
     { title: 'Status', href: 'https://status.usenubis.com' },
     { title: 'Security', href: '/security' },
@@ -27,14 +27,14 @@ const socialLinks = [
 
 export default function FooterSection() {
     return (
-        <footer className="border-t bg-white py-12 dark:bg-transparent">
+        <footer className="relative z-10 border-t bg-white py-12 dark:bg-transparent">
             <div className="mx-auto max-w-5xl px-6 flex flex-col items-center gap-8">
                 <nav className="flex flex-wrap justify-center gap-7 text-sm">
                     {navLinks.map((link, i) => (
                         <Link
                             key={i}
                             href={link.href}
-                            className="text-muted-foreground hover:text-primary duration-150"
+                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
                         >
                             {link.title}
                         </Link>
@@ -48,17 +48,17 @@ export default function FooterSection() {
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={name}
-                            className="text-muted-foreground hover:text-primary duration-150"
+                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
                         >
                             {icon}
                         </a>
                     ))}
                 </div>
                 <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
-                    <a href="https://startupfa.me/s/nubis?utm_source=usenubis.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://startupfa.me/s/nubis?utm_source=usenubis.com" target="_blank" rel="noopener noreferrer" className="relative z-10">
                         <img src="https://startupfa.me/badges/featured/default-rounded.webp" alt="Nubis - Featured on Startup Fame" width="171" height="54" />
                     </a>
-                    <a href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
                         <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" />
                     </a>
                 </div>
