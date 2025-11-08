@@ -8,10 +8,10 @@ import { cn } from '@/lib/utils'
 import { ThemeToggleButton } from './ThemeToggleButton'
 
 const menuItems = [
-    { name: 'Features', href: '#link' },
-    { name: 'Solution', href: '#link' },
-    { name: 'Pricing', href: '#link' },
-    { name: 'About', href: '#link' },
+    { name: 'Docs', href: 'https://docs.usenubis.com' },
+    { name: 'About Us', href: '/about' },
+    { name: 'Status', href: 'https://status.usenubis.com' },
+    { name: 'Contact', href: '/contact' },
 ]
 
 export const HeroHeader = () => {
@@ -83,7 +83,7 @@ export const HeroHeader = () => {
                                     variant="outline"
                                     size="sm"
                                     className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
+                                    <Link href="https://console.usenubis.com/sign-in">
                                         <span>Login</span>
                                     </Link>
                                 </Button>
@@ -91,16 +91,16 @@ export const HeroHeader = () => {
                                     asChild
                                     size="sm"
                                     className={cn(isScrolled && 'lg:hidden')}>
-                                    <Link href="#">
-                                        <span>Sign Up</span>
+                                    <Link href="https://accounts.usenubis.com/waitlist">
+                                        <span>Join the waitlist</span>
                                     </Link>
                                 </Button>
                                 <Button
                                     asChild
                                     size="sm"
                                     className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                    <Link href="#">
-                                        <span>Get Started</span>
+                                    <Link href="https://console.usenubis.com/sign-in">
+                                        <span>Login</span>
                                     </Link>
                                 </Button>
                                 <ThemeToggleButton />

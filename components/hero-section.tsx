@@ -126,7 +126,7 @@ export default function HeroSection() {
                                     speedSegment={0.3}
                                     as="h1"
                                     className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]">
-                                    Modern Solutions for Modern Businesses
+                                    Accelerate Cloud Innovation with Nubis
                                 </TextEffect>
                                 <TextEffect
                                     per="line"
@@ -135,7 +135,7 @@ export default function HeroSection() {
                                     delay={0.5}
                                     as="p"
                                     className="mx-auto mt-8 max-w-2xl text-balance text-lg">
-                                    Highly customizable components for building modern websites and applications that look and feel the way you mean it.
+                                    Nubis allows anyone to deploy their website, app, or workflow to the cloud.
                                 </TextEffect>
 
                                 <AnimatedGroup
@@ -170,7 +170,7 @@ export default function HeroSection() {
                                         variant="ghost"
                                         className="h-10.5 rounded-xl px-5">
                                         <Link href="#link">
-                                            <span className="text-nowrap">Request a demo</span>
+                                            <span className="text-nowrap">Join the waitlist</span>
                                         </Link>
                                     </Button>
                                 </AnimatedGroup>
@@ -193,15 +193,20 @@ export default function HeroSection() {
                                 
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border p-2 sm:p-3 md:p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <div className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
-                                        <SplineViewer
-                                            url="https://prod.spline.design/6DHXxFnIosH768-a/scene.splinecode"
-                                            className="w-full h-full rounded-xl"
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                minHeight: '300px',
-                                            }}
-                                        />
+                                        <Image
+                                    src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
+                                    className="hidden rounded-[12px] dark:block"
+                                    alt="Cloud infrastructure dashboard dark"
+                                    width={1207}
+                                    height={929}
+                                />
+                                <Image
+                                    src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
+                                    className="rounded-[12px] shadow dark:hidden"
+                                    alt="Cloud infrastructure dashboard light"
+                                    width={1207}
+                                    height={929}
+                                />
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +217,7 @@ export default function HeroSection() {
                     <div className="group relative m-auto max-w-5xl px-6">
                         <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
                             <Link
-                                href="/"
+                                href=""
                                 className="block text-sm duration-150 hover:opacity-75">
                                 <span> Meet Our Customers</span>
 

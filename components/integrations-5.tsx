@@ -49,14 +49,14 @@ export default function IntegrationsSection() {
                         </div>
                     </div>
                     <div className="bg-linear-to-t from-background relative z-20 mx-auto mt-12 max-w-lg space-y-6 from-55% text-center">
-                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Integrate with your favorite tools</h2>
-                        <p className="text-muted-foreground">Connect seamlessly with popular platforms and services to enhance your workflow.</p>
+                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Infrastructure and platform integrations</h2>
+                        <p className="text-muted-foreground">Support for standard APIs and protocols across cloud platforms, development tools, and enterprise systems.</p>
 
                         <Button
                             variant="outline"
                             size="sm"
                             asChild>
-                            <Link href="#">Get Started</Link>
+                            <Link href="https://docs.usenubis.com">View Documentation</Link>
                         </Button>
                     </div>
                 </div>
