@@ -31,17 +31,17 @@ export default function ContentSection() {
                         </div>
                     </div>
                     <div className="md:mask-l-from-35% md:mask-l-to-55% mt-12 h-fit md:absolute md:-inset-y-12 md:inset-x-0 md:mt-0">
-                        <div className="border-border/50 relative rounded-2xl border border-dotted p-2">
+                        <div className="border-border/50 relative rounded-2xl border border-dotted p-2 overflow-hidden">
                             <Image
                                 src="https://ik.imagekit.io/nubis/2150690154.jpg"
-                                className="hidden rounded-[12px] dark:block"
+                                className="hidden rounded-[12px] dark:block w-full h-auto"
                                 alt="Cloud infrastructure dashboard dark"
                                 width={1207}
                                 height={929}
                             />
                             <Image
                                 src="https://ik.imagekit.io/nubis/2150690154.jpg"
-                                className="rounded-[12px] shadow dark:hidden"
+                                className="rounded-[12px] shadow dark:hidden w-full h-auto"
                                 alt="Cloud infrastructure dashboard light"
                                 width={1207}
                                 height={929}

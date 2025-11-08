@@ -36,7 +36,7 @@ export default function HeroSection() {
     return (
         <>
             <HeroHeader />
-            <main className="overflow-hidden">
+            <main className="overflow-x-hidden w-full">
                 <div
                     aria-hidden
                     className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block">
@@ -83,7 +83,7 @@ export default function HeroSection() {
                         />
 
                         {/* Spline 3D Animation */}
-                        <div className="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none overflow-visible">
+                        <div className="absolute inset-0 -z-10 flex items-center justify-center pointer-events-none overflow-hidden">
                             <div className="relative w-full h-[500px] sm:h-[600px] md:h-full max-w-3xl sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl px-2 sm:px-4">
                                 <SplineViewer
                                     url="https://prod.spline.design/n2ArOnqmbUvCzhSc/scene.splinecode"
@@ -189,20 +189,20 @@ export default function HeroSection() {
                                 },
                                 ...transitionVariants,
                             }}>
-                            <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+                            <div className="mask-b-from-55% relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
                                 
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border p-2 sm:p-3 md:p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                                    <div className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px]">
+                                    <div className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] overflow-hidden">
                                         <Image
                                     src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
-                                    className="hidden rounded-[12px] dark:block"
+                                    className="hidden rounded-[12px] dark:block w-full h-full object-cover"
                                     alt="Cloud infrastructure dashboard dark"
                                     width={1207}
                                     height={929}
                                 />
                                 <Image
                                     src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
-                                    className="rounded-[12px] shadow dark:hidden"
+                                    className="rounded-[12px] shadow dark:hidden w-full h-full object-cover"
                                     alt="Cloud infrastructure dashboard light"
                                     width={1207}
                                     height={929}
