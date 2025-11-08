@@ -100,6 +100,9 @@ const addDefaultVariants = (variants: Variants) => ({
   visible: { ...defaultItemVariants.visible, ...variants.visible },
 });
 
+const createMotionProxy = (component: React.ElementType) =>
+  motion.create(component as string | React.ComponentType<unknown>);
+
 function AnimatedGroup({
   children,
   className,
@@ -115,14 +118,8 @@ function AnimatedGroup({
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
 
-  const MotionComponent = React.useMemo(
-    () => motion.create(as as keyof JSX.IntrinsicElements),
-    [as]
-  );
-  const MotionChild = React.useMemo(
-    () => motion.create(asChild as keyof JSX.IntrinsicElements),
-    [asChild]
-  );
+  const MotionComponent = React.useMemo(() => createMotionProxy(as), [as]);
+  const MotionChild = React.useMemo(() => createMotionProxy(asChild), [asChild]);
 
   return (
     <MotionComponent
