@@ -1,6 +1,6 @@
 'use client';
 import { ReactNode } from 'react';
-import { motion, Variants } from 'motion/react';
+import { motion, type MotionProps, Variants } from 'motion/react';
 import React from 'react';
 
 export type PresetType =
@@ -100,8 +100,10 @@ const addDefaultVariants = (variants: Variants) => ({
   visible: { ...defaultItemVariants.visible, ...variants.visible },
 });
 
+type MotionProxyComponent = React.ComponentType<MotionProps & { className?: string }>;
+
 const createMotionProxy = (component: React.ElementType) =>
-  motion.create(component as string | React.ComponentType<unknown>);
+  motion.create(component as string | React.ComponentType<unknown>) as MotionProxyComponent;
 
 function AnimatedGroup({
   children,
