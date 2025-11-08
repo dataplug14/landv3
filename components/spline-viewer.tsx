@@ -61,58 +61,118 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       containerRef.current.appendChild(splineViewer);
       splineViewerRef.current = splineViewer;
 
-      // Hide the "Built with Spline" badge
+      // Hide the "Built with Spline" badge - aggressive approach
       const hideBadge = () => {
         try {
+          // Method 1: Hide via shadow DOM
           if (splineViewer.shadowRoot) {
+            // Try multiple selector strategies
+            const allElements = splineViewer.shadowRoot.querySelectorAll('*');
+            allElements.forEach((el) => {
+              const htmlEl = el as HTMLElement;
+              const text = htmlEl.textContent?.toLowerCase() || '';
+              const href = (htmlEl as HTMLAnchorElement).href?.toLowerCase() || '';
+              
+              // Hide if it contains badge-related text or links
+              if (
+                text.includes('built with') ||
+                text.includes('spline') ||
+                href.includes('spline.design') ||
+                href.includes('splinetool.com') ||
+                htmlEl.className?.toLowerCase().includes('badge') ||
+                htmlEl.className?.toLowerCase().includes('watermark') ||
+                htmlEl.getAttribute('href')?.includes('spline')
+              ) {
+                htmlEl.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
+                htmlEl.removeAttribute('href');
+              }
+            });
+
+            // Also target specific selectors (be more selective to avoid hiding legitimate content)
             const selectors = [
               'a[href*="spline"]',
-              'a[target="_blank"]',
-              '.spline-watermark',
+              'a[href*="splinetool"]',
               '[class*="watermark"]',
               '[class*="badge"]',
-              'a[href*="splinetool"]',
+              '[id*="badge"]',
+              '[id*="watermark"]',
             ];
             
             selectors.forEach((selector) => {
-              const elements = splineViewer.shadowRoot!.querySelectorAll(selector);
-              elements.forEach((el) => {
-                const htmlEl = el as HTMLElement;
-                if (htmlEl.textContent?.toLowerCase().includes('built with') || 
-                    htmlEl.textContent?.toLowerCase().includes('spline')) {
-                  htmlEl.style.display = 'none';
-                  htmlEl.style.visibility = 'hidden';
-                  htmlEl.style.opacity = '0';
-                  htmlEl.style.pointerEvents = 'none';
-                }
-              });
+              try {
+                const elements = splineViewer.shadowRoot!.querySelectorAll(selector);
+                elements.forEach((el) => {
+                  const htmlEl = el as HTMLElement;
+                  const text = htmlEl.textContent?.toLowerCase() || '';
+                  const href = (htmlEl as HTMLAnchorElement).href?.toLowerCase() || '';
+                  // Only hide if it's clearly a badge/watermark
+                  if (text.includes('built with') || text.includes('spline') || href.includes('spline')) {
+                    htmlEl.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;';
+                  }
+                });
+              } catch (e) {
+                // Ignore selector errors
+              }
             });
           }
 
-          // Also check main DOM
-          const badges = document.querySelectorAll('a[href*="spline"], a[href*="splinetool"]');
-          badges.forEach((badge) => {
-            const htmlBadge = badge as HTMLElement;
-            if (htmlBadge.textContent?.toLowerCase().includes('built with') ||
-                htmlBadge.textContent?.toLowerCase().includes('spline')) {
-              htmlBadge.style.display = 'none';
-              htmlBadge.style.visibility = 'hidden';
-              htmlBadge.style.opacity = '0';
-              htmlBadge.style.pointerEvents = 'none';
+          // Method 2: Hide via main DOM (for badges that escape shadow DOM)
+          const allLinks = document.querySelectorAll('a');
+          allLinks.forEach((link) => {
+            const htmlLink = link as HTMLAnchorElement;
+            const href = htmlLink.href?.toLowerCase() || '';
+            const text = htmlLink.textContent?.toLowerCase() || '';
+            
+            if (
+              href.includes('spline.design') ||
+              href.includes('splinetool.com') ||
+              (text.includes('built with') && text.includes('spline'))
+            ) {
+              htmlLink.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
             }
           });
+
+          // Method 3: Inject CSS into shadow DOM if possible
+          if (splineViewer.shadowRoot) {
+            let styleEl = splineViewer.shadowRoot.querySelector('style#spline-badge-hider') as HTMLStyleElement;
+            if (!styleEl) {
+              styleEl = document.createElement('style');
+              styleEl.id = 'spline-badge-hider';
+              splineViewer.shadowRoot.appendChild(styleEl);
+            }
+            styleEl.textContent = `
+              a[href*="spline"],
+              a[href*="splinetool"],
+              [class*="badge"],
+              [class*="watermark"],
+              [id*="badge"],
+              [id*="watermark"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+              }
+            `;
+          }
         } catch (e) {
           // Silently fail if shadow DOM access is restricted
         }
       };
 
-      // Hide badge multiple times as Spline loads
-      const intervals = [0, 500, 1000, 2000, 3000];
+      // Hide badge multiple times as Spline loads (more frequent checks)
+      const intervals = [0, 100, 200, 300, 500, 750, 1000, 1500, 2000, 3000, 5000];
       const timeouts = intervals.map((delay) => setTimeout(hideBadge, delay));
       
-      // Observe shadow DOM changes
+      // Observe shadow DOM changes with throttling
+      let hideBadgeTimeout: NodeJS.Timeout | null = null;
       const observer = new MutationObserver(() => {
-        hideBadge();
+        // Throttle badge hiding to avoid performance issues
+        if (hideBadgeTimeout) {
+          clearTimeout(hideBadgeTimeout);
+        }
+        hideBadgeTimeout = setTimeout(() => {
+          hideBadge();
+        }, 50);
       });
       
       let checkShadowRoot: NodeJS.Timeout | null = null;

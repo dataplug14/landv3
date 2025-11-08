@@ -195,8 +195,8 @@
     position: relative;
   }
 }
-/* Hide "Built with Spline" badge - using only valid CSS selectors */
-/* Note: Shadow DOM badge hiding is handled in JavaScript */
+/* Hide "Built with Spline" badge - comprehensive CSS rules */
+/* Note: Shadow DOM badge hiding is handled in JavaScript - text-based hiding must be done in JS */
 a[href*="spline.design"],
 a[href*="splinetool.com"],
 a[href*="spline"][target="_blank"],
@@ -210,4 +210,18 @@ a[href*="splinetool"][target="_blank"] {
   width: 0 !important;
   height: 0 !important;
   overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+}
+
+/* Hide via attribute selectors */
+[class*="spline"][class*="badge"],
+[class*="spline"][class*="watermark"],
+[id*="spline"][id*="badge"],
+[id*="spline"][id*="watermark"],
+[class*="badge"][class*="spline"],
+[id*="badge"][id*="spline"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
