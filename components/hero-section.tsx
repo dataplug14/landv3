@@ -5,10 +5,18 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
+import type { AnimatedGroupProps } from '@/components/ui/animated-group'
+import type { Transition } from 'motion/react'
 import { HeroHeader } from './header'
 import { SplineViewer } from './spline-viewer'
 
-const transitionVariants = {
+const createSpringTransition = (duration: number): Transition => ({
+    type: 'spring',
+    bounce: 0.3,
+    duration,
+})
+
+const transitionVariants: NonNullable<AnimatedGroupProps['variants']> = {
     item: {
         hidden: {
             opacity: 0,
@@ -19,11 +27,7 @@ const transitionVariants = {
             opacity: 1,
             filter: 'blur(0px)',
             y: 0,
-            transition: {
-                type: 'spring',
-                bounce: 0.3,
-                duration: 1.5,
-            },
+            transition: createSpringTransition(1.5),
         },
     },
 }
@@ -59,11 +63,7 @@ export default function HeroSection() {
                                     visible: {
                                         opacity: 1,
                                         y: 0,
-                                        transition: {
-                                            type: 'spring',
-                                            bounce: 0.3,
-                                            duration: 2,
-                                        },
+                                        transition: createSpringTransition(2),
                                     },
                                 },
                             }}
