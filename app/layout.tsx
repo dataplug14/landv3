@@ -44,7 +44,14 @@ export const metadata: Metadata = {
     "cloud scheduling",
   ],
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: "/favicon.png", sizes: "any" },
+      { url: "/favicon.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/favicon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: ["/favicon.png"],
   },
   openGraph: {
     title: "Nubis",
