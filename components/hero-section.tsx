@@ -158,7 +158,7 @@ export default function HeroSection() {
                                             asChild
                                             size="lg"
                                             className="rounded-xl px-5 text-base">
-                                            <Link href="https://console.usenubis.com/sign-in">
+                                            <Link href="https://console.usenubis.com/dashboard">
                                                 <span className="text-nowrap">Start Building</span>
                                             </Link>
                                         </Button>
