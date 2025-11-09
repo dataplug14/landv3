@@ -73,12 +73,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const nonce = headers().get("x-nonce") ?? undefined;
+  const headerList = await headers();
+  const nonce = headerList.get("x-nonce") ?? undefined;
 
   return (
     <html lang="en" suppressHydrationWarning>

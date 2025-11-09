@@ -1,6 +1,7 @@
-import { randomBytes } from "crypto";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+
+const generateNonce = () => crypto.randomUUID().replace(/-/g, "");
 
 const buildContentSecurityPolicy = (nonce: string) =>
   [
@@ -16,7 +17,7 @@ const buildContentSecurityPolicy = (nonce: string) =>
   ].join(" ");
 
 export function middleware(request: NextRequest) {
-  const nonce = randomBytes(16).toString("base64");
+  const nonce = generateNonce();
 
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set("x-nonce", nonce);
