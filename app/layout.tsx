@@ -57,13 +57,13 @@ export const metadata: Metadata = {
     title: "Nubis",
     description: "Nubis is a cloud platform for building and deploying applications. Features include elastic compute, block storage, load balancing and firewall, and GitHub Actions runners. Choose our managed or self-hosted solutions to cut cloud costs by 3–10x. (Nubis is not yet open source.)",
     url: "https://usenubis.com",
-    images: "https://ik.imagekit.io/nubis/logo.jpg",
+    images: "/main-light (1).png",
   },
   twitter: {
     card: "summary_large_image",
     title: "Nubis",
     description: "Nubis is a cloud platform for building and deploying applications. Features include elastic compute, block storage, load balancing and firewall, and GitHub Actions runners. Choose our managed or self-hosted solutions to cut cloud costs by 3–10x. (Nubis is not yet open source.)",
-    images: "https://ik.imagekit.io/nubis/logo.jpg",
+    images: "/main-light (1).png",
   },
   alternates: {
     types: {
