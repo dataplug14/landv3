@@ -1,7 +1,15 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const generateNonce = () => crypto.randomUUID().replace(/-/g, "");
+const generateNonce = () => {
+  const array = new Uint8Array(16);
+  crypto.getRandomValues(array);
+  let binary = "";
+  array.forEach((byte) => {
+    binary += String.fromCharCode(byte);
+  });
+  return btoa(binary);
+};
 
 const buildContentSecurityPolicy = (nonce: string) =>
   [
