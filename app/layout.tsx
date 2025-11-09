@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import { Quicksand } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -72,11 +73,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerList = await headers();
+  const nonce = headerList.get("x-nonce") ?? undefined;
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.variable} font-sans antialiased dark:bg-background dark:text-foreground overflow-x-hidden`} suppressHydrationWarning>
@@ -84,6 +88,7 @@ export default function RootLayout({
           src="https://unpkg.com/@splinetool/viewer@1.10.99/build/spline-viewer.js"
           strategy="afterInteractive"
           type="module"
+          nonce={nonce}
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
