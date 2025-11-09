@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
+
 const quicksand = Quicksand({
   variable: "--font-quicksand",
   subsets: ["latin"],
@@ -19,8 +20,31 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Nubis",
   description: "Nubis is a cloud platform for building and deploying applications. Features include elastic compute, block storage, load balancing and firewall, and GitHub Actions runners. Choose our managed or self-hosted solutions to cut cloud costs by 3–10x. (Nubis is not yet open source.)",
+  keywords: [
+    "cloud computing",
+    "virtual machines",
+    "cloud management",
+    "multi-cloud",
+    "infrastructure",
+    "VM hosting",
+    "cloud platform",
+    "Africa cloud",
+    "cloud hosting",
+    "cloud infrastructure",
+    "cloud services",
+    "cloud storage",
+    "cloud networking",
+    "cloud security",
+    "cloud monitoring",
+    "cloud backup",
+    "cloud migration",
+    "cloud automation",
+    "cloud orchestration",
+    "cloud scheduling",
+    "cloud scheduling",
+  ],
   icons: {
-    icon: "https://ik.imagekit.io/nubis/logo.jpg",
+    icon: "/favicon.png",
   },
   openGraph: {
     title: "Nubis",
@@ -56,3 +80,4 @@ export default function RootLayout({
     </html>
   );
 }
+
