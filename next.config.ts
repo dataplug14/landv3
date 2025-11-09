@@ -2,7 +2,11 @@ import type { NextConfig } from "next";
 
 const ContentSecurityPolicy = [
   "default-src 'self';",
-  "script-src 'self';",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval';",
+  "style-src 'self' 'unsafe-inline';",
+  "img-src 'self' data: https:;",
+  "font-src 'self' data:;",
+  "connect-src 'self' https:;",
   "object-src 'none';",
   "base-uri 'self';",
   "frame-ancestors 'none';",
@@ -12,7 +16,7 @@ const ContentSecurityPolicy = [
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+    value: ContentSecurityPolicy,
   },
   {
     key: 'X-Frame-Options',
