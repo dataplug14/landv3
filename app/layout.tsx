@@ -88,7 +88,7 @@ export default async function RootLayout({
           src="https://unpkg.com/@splinetool/viewer@1.10.99/build/spline-viewer.js"
           strategy="afterInteractive"
           type="module"
-          nonce={nonce}
+          crossOrigin="anonymous"
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}

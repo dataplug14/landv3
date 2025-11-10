@@ -76,7 +76,7 @@ export default function FooterSection() {
                         <img src="https://startupfa.me/badges/featured/default-rounded.webp" alt="Nubis - Featured on Startup Fame" width="171" height="54" />
                     </a>
                     <a href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
-                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" style={{ width: '250px', height: '54px' }} width="250" height="54" />
+                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" className="w-[250px] h-[54px]" width="250" height="54" />
                     </a>
                 </div>
                 <div className="w-full mt-8">

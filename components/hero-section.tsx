@@ -87,13 +87,7 @@ export default function HeroSection() {
                             <div className="relative w-full h-[500px] sm:h-[600px] md:h-full max-w-3xl sm:max-w-4xl lg:max-w-5xl xl:max-w-6xl px-2 sm:px-4">
                                 <SplineViewer
                                     url="https://prod.spline.design/n2ArOnqmbUvCzhSc/scene.splinecode"
-                                    className="w-full h-full opacity-40 sm:opacity-45 md:opacity-50 lg:opacity-60 scale-[0.7] sm:scale-75 md:scale-90 lg:scale-100 -translate-y-6 sm:-translate-y-10 md:-translate-y-5 lg:translate-y-0"
-                                    style={{
-                                        width: '100%',
-                                        minHeight: '300px',
-                                        height: '100%',
-                                        maxHeight: '500px',
-                                    }}
+                                    className="w-full h-full min-h-[300px] max-h-[500px] opacity-40 sm:opacity-45 md:opacity-50 lg:opacity-60 scale-[0.7] sm:scale-75 md:scale-90 lg:scale-100 -translate-y-6 sm:-translate-y-10 md:-translate-y-5 lg:translate-y-0"
                                 />
                             </div>
                         </div>
@@ -199,6 +193,7 @@ export default function HeroSection() {
                                     alt="Cloud infrastructure dashboard dark"
                                     width={1207}
                                     height={929}
+                                    priority
                                 />
                                 <Image
                                     src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
@@ -206,6 +201,7 @@ export default function HeroSection() {
                                     alt="Cloud infrastructure dashboard light"
                                     width={1207}
                                     height={929}
+                                    priority
                                 />
                                     </div>
                                 </div>

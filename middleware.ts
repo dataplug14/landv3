@@ -14,16 +14,17 @@ const generateNonce = () => {
 const buildContentSecurityPolicy = (nonce: string) =>
   [
     "default-src 'self';",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic';`,
-    `style-src 'self' 'nonce-${nonce}';`,
-    "img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com;",
-    "font-src 'self' data:;",
-    "connect-src 'self' https://prod.spline.design;",
+    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net;`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
+    "img-src 'self' data: blob: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com https://app.spline.design https://prod.spline.design;",
+    "font-src 'self' data: https://fonts.gstatic.com;",
+    "connect-src 'self' https://prod.spline.design https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com wss: ws:;",
     "worker-src 'self' blob: data: https://prod.spline.design;",
     "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net;",
     "object-src 'none';",
     "base-uri 'self';",
     "frame-ancestors 'none';",
+    "upgrade-insecure-requests;",
   ].join(" ");
 
 export function middleware(request: NextRequest) {
