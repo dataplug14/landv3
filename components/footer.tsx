@@ -8,6 +8,12 @@ const navLinks = [
     { title: 'Contact', href: '/contact' }
 ]
 
+const legalLinks = [
+    { title: 'Privacy Policy', href: '/privacy' },
+    { title: 'Terms of Service', href: '/terms' },
+    { title: 'Acceptable Use', href: '/acceptable-use' }
+]
+
 const socialLinks = [
     {
         name: "X",
@@ -31,6 +37,17 @@ export default function FooterSection() {
             <div className="mx-auto max-w-5xl px-6 flex flex-col items-center gap-8">
                 <nav className="flex flex-wrap justify-center gap-7 text-sm">
                     {navLinks.map((link, i) => (
+                        <Link
+                            key={i}
+                            href={link.href}
+                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
+                        >
+                            {link.title}
+                        </Link>
+                    ))}
+                </nav>
+                <nav className="flex flex-wrap justify-center gap-6 text-sm border-t pt-8 w-full">
+                    {legalLinks.map((link, i) => (
                         <Link
                             key={i}
                             href={link.href}
