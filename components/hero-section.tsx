@@ -41,8 +41,16 @@ function VideoPlayer() {
     const [isMuted, setIsMuted] = useState(true)
     const [showControls, setShowControls] = useState(false)
     const [isVisible, setIsVisible] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
     useEffect(() => {
+        // Detect mobile devices
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 setIsVisible(entry.isIntersecting)
@@ -51,14 +59,17 @@ function VideoPlayer() {
                     setIsPlaying(true)
                 }
             },
-            { threshold: 0.5 }
+            { threshold: 0.3 }
         )
 
         if (containerRef.current) {
             observer.observe(containerRef.current)
         }
 
-        return () => observer.disconnect()
+        return () => {
+            observer.disconnect()
+            window.removeEventListener('resize', checkMobile)
+        }
     }, [])
 
     const togglePlay = () => {
@@ -92,15 +103,16 @@ function VideoPlayer() {
     return (
         <div
             ref={containerRef}
-            className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] overflow-hidden rounded-[12px] group cursor-pointer"
-            onMouseEnter={() => setShowControls(true)}
-            onMouseLeave={() => setShowControls(false)}
+            className="relative w-full aspect-video min-h-[250px] xs:min-h-[280px] sm:min-h-[350px] md:aspect-[16/9] md:min-h-[450px] lg:aspect-[15/8] lg:min-h-[500px] overflow-hidden rounded-[8px] sm:rounded-[12px] group cursor-pointer"
+            onMouseEnter={() => !isMobile && setShowControls(true)}
+            onMouseLeave={() => !isMobile && setShowControls(false)}
+            onTouchStart={() => setShowControls(!showControls)}
             onClick={togglePlay}>
             
             {/* Video Element */}
             <video
                 ref={videoRef}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 md:group-hover:scale-105"
                 loop
                 muted={isMuted}
                 playsInline
@@ -110,35 +122,36 @@ function VideoPlayer() {
             </video>
 
             {/* Gradient Overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`} />
+            <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${showControls || isMobile ? 'opacity-100' : 'opacity-0'}`} />
 
             {/* Play/Pause Overlay */}
-            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${!isPlaying ? 'opacity-100' : 'opacity-0'}`}>
-                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-8 transition-transform duration-300 hover:scale-110 hover:bg-white/20">
-                    <Play className="w-12 h-12 text-white fill-white" />
+            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${!isPlaying ? 'opacity-100' : 'opacity-0'} pointer-events-none`}>
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-4 sm:p-6 md:p-8 transition-transform duration-300 hover:scale-110 hover:bg-white/20 active:scale-95">
+                    <Play className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white fill-white" />
                 </div>
             </div>
 
             {/* Epic Glow Effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            <div className="hidden md:block absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-xl" />
             </div>
 
             {/* Controls Bar */}
-            <div className={`absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
+            <div className={`absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:p-6 flex items-center justify-between transition-all duration-300 ${showControls || isMobile ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
                 
                 {/* Left Controls */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                     <button
                         onClick={(e) => {
                             e.stopPropagation()
                             togglePlay()
                         }}
-                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
+                        className="bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-xl border border-white/20 rounded-full p-2.5 sm:p-3 md:p-3.5 transition-all duration-200 hover:scale-110 active:scale-95 touch-manipulation"
+                        aria-label={isPlaying ? 'Pause video' : 'Play video'}>
                         {isPlaying ? (
-                            <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                            <Pause className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white fill-white" />
                         ) : (
-                            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                            <Play className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white fill-white" />
                         )}
                     </button>
 
@@ -147,30 +160,32 @@ function VideoPlayer() {
                             e.stopPropagation()
                             toggleMute()
                         }}
-                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
+                        className="bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-xl border border-white/20 rounded-full p-2.5 sm:p-3 md:p-3.5 transition-all duration-200 hover:scale-110 active:scale-95 touch-manipulation"
+                        aria-label={isMuted ? 'Unmute video' : 'Mute video'}>
                         {isMuted ? (
-                            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            <VolumeX className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                         ) : (
-                            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                            <Volume2 className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                         )}
                     </button>
                 </div>
 
                 {/* Right Controls */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 sm:gap-3">
                     <button
                         onClick={(e) => {
                             e.stopPropagation()
                             toggleFullscreen()
                         }}
-                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
-                        <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        className="bg-white/10 hover:bg-white/20 active:bg-white/30 backdrop-blur-xl border border-white/20 rounded-full p-2.5 sm:p-3 md:p-3.5 transition-all duration-200 hover:scale-110 active:scale-95 touch-manipulation"
+                        aria-label="Fullscreen">
+                        <Maximize className="w-5 h-5 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
                     </button>
                 </div>
             </div>
 
             {/* Epic Corner Shine Effect */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+            <div className="hidden md:block absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
         </div>
     )
 }
@@ -326,9 +341,9 @@ export default function HeroSection() {
                                 },
                                 ...transitionVariants,
                             }}>
-                            <div className="mask-b-from-55% relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
+                            <div className="mask-b-from-55% relative mt-6 sm:mt-8 md:mt-12 lg:mt-20 overflow-hidden px-3 sm:px-4 md:px-6 lg:px-2">
                                 
-                                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border p-2 sm:p-3 md:p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-4 sm:mt-6 max-w-6xl overflow-hidden rounded-xl sm:rounded-2xl border p-1.5 sm:p-2 md:p-3 lg:p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <VideoPlayer />
                                 </div>
                             </div>
