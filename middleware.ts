@@ -14,16 +14,16 @@ const generateNonce = () => {
 const buildContentSecurityPolicy = (nonce: string) =>
   [
     "default-src 'self';",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic';`,
-    `style-src 'self' 'nonce-${nonce}';`,
-    "img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com;",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;`,
+    `style-src 'self' 'nonce-${nonce}' https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;`,
+    "img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com https://img.clerk.com https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
     "font-src 'self' data:;",
-    "connect-src 'self' https://prod.spline.design;",
+    "connect-src 'self' https://prod.spline.design https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
     "worker-src 'self' blob: data: https://prod.spline.design;",
-    "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net;",
+    "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
     "object-src 'none';",
     "base-uri 'self';",
-    "frame-ancestors 'none';",
+    "frame-ancestors 'self';",
   ].join(" ");
 
 export function middleware(request: NextRequest) {
