@@ -79,10 +79,21 @@ export default function FooterSection() {
                         <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" className="w-[250px] h-[54px]" width="250" height="54" />
                     </a>
                 </div>
-                <div className="w-full mt-8">
+                <div className="w-full mt-8 flex flex-col gap-4">
                     <span className="block text-center text-sm text-muted-foreground">
                         © 2025 Nubis, all rights reserved.
                     </span>
+                    <div className="relative z-10">
+                        <iframe 
+                            src="https://status.usenubis.com/badge?theme=dark" 
+                            width="250" 
+                            height="30" 
+                            frameBorder="0" 
+                            scrolling="no" 
+                            style={{ colorScheme: 'normal' }}
+                            title="Nubis Service Status"
+                        />
+                    </div>
                 </div>
             </div>
         </footer>

@@ -20,7 +20,7 @@ const buildContentSecurityPolicy = (nonce: string) =>
     "font-src 'self' data: https://fonts.gstatic.com;",
     "connect-src 'self' https://prod.spline.design https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com wss: ws:;",
     "worker-src 'self' blob: data: https://prod.spline.design;",
-    "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net;",
+    "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net https://status.usenubis.com;",
     "object-src 'none';",
     "base-uri 'self';",
     "frame-ancestors 'none';",
