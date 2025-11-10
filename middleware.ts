@@ -19,6 +19,8 @@ const buildContentSecurityPolicy = (nonce: string) =>
     "img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com;",
     "font-src 'self' data:;",
     "connect-src 'self' https://prod.spline.design;",
+    "worker-src 'self' blob: https://prod.spline.design;",
+    "child-src 'self' blob: https://prod.spline.design;",
     "object-src 'none';",
     "base-uri 'self';",
     "frame-ancestors 'none';",
