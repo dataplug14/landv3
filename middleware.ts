@@ -11,20 +11,39 @@ const generateNonce = () => {
   return btoa(binary);
 };
 
-const buildContentSecurityPolicy = (nonce: string) =>
-  [
+const clerkDomainPatterns = ["https://*.clerk.com"];
+
+if (process.env.NODE_ENV !== "production") {
+  clerkDomainPatterns.push(
+    "https://*.clerkstage.dev",
+    "https://*.clerk.services",
+    "https://*.clerk.accounts.dev",
+  );
+}
+
+const joinSources = (sources: string[]) => sources.join(" ");
+
+const buildContentSecurityPolicy = (nonce: string) => {
+  const clerkDomains = joinSources(clerkDomainPatterns);
+  const clerkScriptSources = joinSources([
+    ...clerkDomainPatterns,
+    "https://challenges.cloudflare.com",
+  ]);
+
+  return [
     "default-src 'self';",
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;`,
-    `style-src 'self' 'nonce-${nonce}' https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;`,
-    "img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com https://img.clerk.com https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
+    `script-src 'self' 'nonce-${nonce}' ${clerkScriptSources};`,
+    `style-src 'self' 'nonce-${nonce}' ${clerkDomains};`,
+    `img-src 'self' data: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com ${clerkDomains};`,
     "font-src 'self' data:;",
-    "connect-src 'self' https://prod.spline.design https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
+    `connect-src 'self' https://prod.spline.design ${clerkDomains};`,
     "worker-src 'self' blob: data: https://prod.spline.design;",
-    "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net https://*.clerk.com https://*.clerkstage.dev https://*.clerk.services https://*.clerk.accounts.dev;",
+    `frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net ${clerkDomains} https://challenges.cloudflare.com;`,
     "object-src 'none';",
     "base-uri 'self';",
-    "frame-ancestors 'self';",
+    "frame-ancestors 'none';",
   ].join(" ");
+};
 
 export function middleware(request: NextRequest) {
   const nonce = generateNonce();
