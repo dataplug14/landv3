@@ -1,6 +1,8 @@
-import React from 'react'
+'use client'
+
+import React, { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight } from 'lucide-react'
+import { ArrowRight, ChevronRight, Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
@@ -30,6 +32,147 @@ const transitionVariants: NonNullable<AnimatedGroupProps['variants']> = {
             transition: createSpringTransition(1.5),
         },
     },
+}
+
+function VideoPlayer() {
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [isMuted, setIsMuted] = useState(true)
+    const [showControls, setShowControls] = useState(false)
+    const [isVisible, setIsVisible] = useState(false)
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting)
+                if (entry.isIntersecting && videoRef.current) {
+                    videoRef.current.play()
+                    setIsPlaying(true)
+                }
+            },
+            { threshold: 0.5 }
+        )
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current)
+        }
+
+        return () => observer.disconnect()
+    }, [])
+
+    const togglePlay = () => {
+        if (videoRef.current) {
+            if (isPlaying) {
+                videoRef.current.pause()
+            } else {
+                videoRef.current.play()
+            }
+            setIsPlaying(!isPlaying)
+        }
+    }
+
+    const toggleMute = () => {
+        if (videoRef.current) {
+            videoRef.current.muted = !isMuted
+            setIsMuted(!isMuted)
+        }
+    }
+
+    const toggleFullscreen = () => {
+        if (videoRef.current) {
+            if (document.fullscreenElement) {
+                document.exitFullscreen()
+            } else {
+                videoRef.current.requestFullscreen()
+            }
+        }
+    }
+
+    return (
+        <div
+            ref={containerRef}
+            className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] overflow-hidden rounded-[12px] group cursor-pointer"
+            onMouseEnter={() => setShowControls(true)}
+            onMouseLeave={() => setShowControls(false)}
+            onClick={togglePlay}>
+            
+            {/* Video Element */}
+            <video
+                ref={videoRef}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loop
+                muted={isMuted}
+                playsInline
+                preload="metadata">
+                <source src="/nubis demo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+
+            {/* Gradient Overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`} />
+
+            {/* Play/Pause Overlay */}
+            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${!isPlaying ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-full p-8 transition-transform duration-300 hover:scale-110 hover:bg-white/20">
+                    <Play className="w-12 h-12 text-white fill-white" />
+                </div>
+            </div>
+
+            {/* Epic Glow Effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-xl" />
+            </div>
+
+            {/* Controls Bar */}
+            <div className={`absolute bottom-0 left-0 right-0 p-4 sm:p-6 flex items-center justify-between transition-all duration-300 ${showControls ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
+                
+                {/* Left Controls */}
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            togglePlay()
+                        }}
+                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
+                        {isPlaying ? (
+                            <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                        ) : (
+                            <Play className="w-4 h-4 sm:w-5 sm:h-5 text-white fill-white" />
+                        )}
+                    </button>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            toggleMute()
+                        }}
+                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
+                        {isMuted ? (
+                            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        ) : (
+                            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                        )}
+                    </button>
+                </div>
+
+                {/* Right Controls */}
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            toggleFullscreen()
+                        }}
+                        className="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 rounded-full p-2 sm:p-3 transition-all duration-200 hover:scale-110">
+                        <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                    </button>
+                </div>
+            </div>
+
+            {/* Epic Corner Shine Effect */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl" />
+        </div>
+    )
 }
 
 export default function HeroSection() {
@@ -186,24 +329,7 @@ export default function HeroSection() {
                             <div className="mask-b-from-55% relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20">
                                 
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl border p-2 sm:p-3 md:p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                                    <div className="relative w-full aspect-square sm:aspect-video md:aspect-[16/9] lg:aspect-[15/8] min-h-[300px] sm:min-h-[400px] md:min-h-[500px] overflow-hidden">
-                                        <Image
-                                    src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
-                                    className="hidden rounded-[12px] dark:block w-full h-full object-cover"
-                                    alt="Cloud infrastructure dashboard dark"
-                                    width={1207}
-                                    height={929}
-                                    priority
-                                />
-                                <Image
-                                    src="https://ik.imagekit.io/nubis/image.jpg?updatedAt=1762601471021"
-                                    className="rounded-[12px] shadow dark:hidden w-full h-full object-cover"
-                                    alt="Cloud infrastructure dashboard light"
-                                    width={1207}
-                                    height={929}
-                                    priority
-                                />
-                                    </div>
+                                    <VideoPlayer />
                                 </div>
                             </div>
                         </AnimatedGroup>
