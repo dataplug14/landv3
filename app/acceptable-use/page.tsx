@@ -1,28 +1,25 @@
-import Link from 'next/link'
+import { HeroHeader } from '@/components/header'
+import FooterSection from '@/components/footer'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Acceptable Use Policy - Nubis',
+  title: 'Acceptable Use Policy | Nubis',
   description: 'Acceptable Use Policy for Nubis cloud platform',
 }
 
 export default function AcceptableUsePolicy() {
   return (
-    <div className="min-h-screen bg-white dark:bg-background">
-      <div className="mx-auto max-w-4xl px-6 py-16 sm:py-24">
-        <div className="mb-8">
-          <Link 
-            href="/" 
-            className="text-sm text-muted-foreground hover:text-primary duration-150"
-          >
-            ← Back to Home
-          </Link>
-        </div>
+    <>
+      <HeroHeader />
+      <main className="min-h-screen pt-24 md:pt-32">
+        <section className="py-16 md:py-32">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="space-y-6 mb-12">
+              <h1 className="text-4xl font-medium lg:text-5xl">Acceptable Use Policy</h1>
+              <p className="text-muted-foreground">Last updated: November 10, 2025</p>
+            </div>
 
-        <h1 className="text-4xl font-bold mb-4">Acceptable Use Policy</h1>
-        <p className="text-muted-foreground mb-12">Last updated: November 10, 2025</p>
-
-        <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose prose-slate dark:prose-invert max-w-none">
           <section className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">1. Purpose</h2>
             <p className="mb-4 leading-relaxed text-foreground/90">
@@ -210,9 +207,12 @@ export default function AcceptableUsePolicy() {
               Website: <a href="https://usenubis.com/contact" className="text-primary hover:underline">https://usenubis.com/contact</a>
             </p>
           </section>
-        </div>
-      </div>
-    </div>
+            </div>
+          </div>
+        </section>
+    </main>
+    <FooterSection />
+  </>
   )
 }
 

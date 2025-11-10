@@ -1,28 +1,25 @@
-import Link from 'next/link'
+import { HeroHeader } from '@/components/header'
+import FooterSection from '@/components/footer'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service - Nubis',
+  title: 'Terms of Service | Nubis',
   description: 'Terms of Service for Nubis cloud platform',
 }
 
 export default function TermsOfService() {
   return (
-    <div className="min-h-screen bg-white dark:bg-background">
-      <div className="mx-auto max-w-4xl px-6 py-16 sm:py-24">
-        <div className="mb-8">
-          <Link 
-            href="/" 
-            className="text-sm text-muted-foreground hover:text-primary duration-150"
-          >
-            ← Back to Home
-          </Link>
-        </div>
+    <>
+      <HeroHeader />
+      <main className="min-h-screen pt-24 md:pt-32">
+        <section className="py-16 md:py-32">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="space-y-6 mb-12">
+              <h1 className="text-4xl font-medium lg:text-5xl">Terms of Service</h1>
+              <p className="text-muted-foreground">Last updated: November 10, 2025</p>
+            </div>
 
-        <h1 className="text-4xl font-bold mb-4">Terms of Service</h1>
-        <p className="text-muted-foreground mb-12">Last updated: November 10, 2025</p>
-
-        <div className="prose prose-slate dark:prose-invert max-w-none">
+            <div className="prose prose-slate dark:prose-invert max-w-none">
           <section className="mb-12">
             <h2 className="text-2xl font-semibold mb-4">1. Agreement to Terms</h2>
             <p className="mb-4 leading-relaxed text-foreground/90">
@@ -233,9 +230,12 @@ export default function TermsOfService() {
               Website: <a href="https://usenubis.com/contact" className="text-primary hover:underline">https://usenubis.com/contact</a>
             </p>
           </section>
-        </div>
-      </div>
-    </div>
+            </div>
+          </div>
+        </section>
+    </main>
+    <FooterSection />
+  </>
   )
 }
 
