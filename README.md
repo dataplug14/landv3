@@ -34,3 +34,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+<a href="https://nxgntools.com/tools/nubis" target="_blank" rel="noopener" style="display: inline-block; width: auto;">
+    <img src="https://nxgntools.com/api/embed/nubis?type=FEATURED_ON" alt="NextGen Tools Badge" style="height: 48px; width: auto;" />
+</a>
