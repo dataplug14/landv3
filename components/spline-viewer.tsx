@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
+let sharedScriptPromise: Promise<void> | null = null;
 
 interface SplineViewerProps {
   url: string;
@@ -12,11 +14,35 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const splineViewerRef = useRef<HTMLElement | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
+  const [shouldLoad, setShouldLoad] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return !('IntersectionObserver' in window);
+  });
 
+  // Defer loading until the viewer is near the viewport to reduce initial payload.
   useEffect(() => {
     if (!containerRef.current || typeof window === 'undefined') return;
+    if (!('IntersectionObserver' in window)) return;
 
-    // Wait for Spline script to load
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const isVisible = entries.some((entry) => entry.isIntersecting);
+        if (isVisible) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px', threshold: 0.1 }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current || typeof window === 'undefined' || !shouldLoad) return;
+
     const checkSplineLoaded = () => {
       try {
         return customElements.get('spline-viewer') !== undefined;
@@ -25,36 +51,87 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       }
     };
 
+    const loadSplineScript = () => {
+      if (checkSplineLoaded()) {
+        sharedScriptPromise = sharedScriptPromise ?? Promise.resolve();
+        return sharedScriptPromise;
+      }
+      if (sharedScriptPromise) return sharedScriptPromise;
+
+      const existingScript = document.querySelector<HTMLScriptElement>('script[data-spline-viewer]');
+      if (existingScript) {
+        if (existingScript.dataset.loaded === 'true' || checkSplineLoaded()) {
+          sharedScriptPromise = Promise.resolve();
+          return sharedScriptPromise;
+        }
+
+        sharedScriptPromise = new Promise((resolve, reject) => {
+          const handleLoad = () => {
+            existingScript.dataset.loaded = 'true';
+            resolve();
+          };
+
+          const handleError = () => reject(new Error('Failed to load Spline viewer script'));
+
+          existingScript.addEventListener('load', handleLoad, { once: true });
+          existingScript.addEventListener('error', handleError, { once: true });
+        });
+
+        return sharedScriptPromise;
+      }
+
+      sharedScriptPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/@splinetool/viewer@1.10.99/build/spline-viewer.js';
+        script.type = 'module';
+        script.crossOrigin = 'anonymous';
+        script.dataset.splineViewer = 'true';
+
+        script.addEventListener(
+          'load',
+          () => {
+            script.dataset.loaded = 'true';
+            resolve();
+          },
+          { once: true }
+        );
+
+        script.addEventListener(
+          'error',
+          () => {
+            reject(new Error('Failed to load Spline viewer script'));
+          },
+          { once: true }
+        );
+
+        document.body.appendChild(script);
+      });
+
+      return sharedScriptPromise;
+    };
+
     const createSplineViewer = (): (() => void) => {
       if (!containerRef.current) return () => {};
 
       const splineViewer = document.createElement('spline-viewer') as HTMLElement;
       splineViewer.setAttribute('url', url);
-      
+
       if (className) {
         splineViewer.className = className;
       }
-      
+
       if (style) {
         if (style.minHeight) {
-          splineViewer.style.minHeight = typeof style.minHeight === 'number' 
-            ? `${style.minHeight}px` 
-            : style.minHeight;
+          splineViewer.style.minHeight = typeof style.minHeight === 'number' ? `${style.minHeight}px` : style.minHeight;
         }
         if (style.height) {
-          splineViewer.style.height = typeof style.height === 'number' 
-            ? `${style.height}px` 
-            : style.height;
+          splineViewer.style.height = typeof style.height === 'number' ? `${style.height}px` : style.height;
         }
         if (style.maxHeight) {
-          splineViewer.style.maxHeight = typeof style.maxHeight === 'number' 
-            ? `${style.maxHeight}px` 
-            : style.maxHeight;
+          splineViewer.style.maxHeight = typeof style.maxHeight === 'number' ? `${style.maxHeight}px` : style.maxHeight;
         }
         if (style.width) {
-          splineViewer.style.width = typeof style.width === 'number' 
-            ? `${style.width}px` 
-            : style.width;
+          splineViewer.style.width = typeof style.width === 'number' ? `${style.width}px` : style.width;
         }
       }
 
@@ -72,7 +149,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
               const htmlEl = el as HTMLElement;
               const text = htmlEl.textContent?.toLowerCase() || '';
               const href = (htmlEl as HTMLAnchorElement).href?.toLowerCase() || '';
-              
+
               // Hide if it contains badge-related text or links
               if (
                 text.includes('built with') ||
@@ -83,7 +160,8 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
                 htmlEl.className?.toLowerCase().includes('watermark') ||
                 htmlEl.getAttribute('href')?.includes('spline')
               ) {
-                htmlEl.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
+                htmlEl.style.cssText =
+                  'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
                 htmlEl.removeAttribute('href');
               }
             });
@@ -97,7 +175,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
               '[id*="badge"]',
               '[id*="watermark"]',
             ];
-            
+
             selectors.forEach((selector) => {
               try {
                 const elements = splineViewer.shadowRoot!.querySelectorAll(selector);
@@ -107,10 +185,11 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
                   const href = (htmlEl as HTMLAnchorElement).href?.toLowerCase() || '';
                   // Only hide if it's clearly a badge/watermark
                   if (text.includes('built with') || text.includes('spline') || href.includes('spline')) {
-                    htmlEl.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;';
+                    htmlEl.style.cssText =
+                      'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important;';
                   }
                 });
-              } catch (e) {
+              } catch {
                 // Ignore selector errors
               }
             });
@@ -119,20 +198,21 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
           // Method 2: Hide via main DOM (for badges that escape shadow DOM)
           const allLinks = document.querySelectorAll('a');
           allLinks.forEach((link) => {
-            const htmlLink = link as HTMLAnchorElement;
-            const href = htmlLink.href?.toLowerCase() || '';
-            const text = htmlLink.textContent?.toLowerCase() || '';
-            
+            const htmlEl = link as HTMLElement;
+            const text = htmlEl.textContent?.toLowerCase() || '';
+            const href = (link as HTMLAnchorElement).href?.toLowerCase() || '';
             if (
               href.includes('spline.design') ||
               href.includes('splinetool.com') ||
               (text.includes('built with') && text.includes('spline'))
             ) {
-              htmlLink.style.cssText = 'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
+              htmlEl.style.cssText =
+                'display: none !important; visibility: hidden !important; opacity: 0 !important; pointer-events: none !important; position: absolute !important; left: -9999px !important;';
+              htmlEl.removeAttribute('href');
             }
           });
 
-          // Method 3: Inject CSS into shadow DOM if possible
+          // Method 3: Inject CSS into shadow DOM to hide badges (more reliable)
           if (splineViewer.shadowRoot) {
             let styleEl = splineViewer.shadowRoot.querySelector('style#spline-badge-hider') as HTMLStyleElement;
             if (!styleEl) {
@@ -154,7 +234,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
               }
             `;
           }
-        } catch (e) {
+        } catch {
           // Silently fail if shadow DOM access is restricted
         }
       };
@@ -162,7 +242,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       // Hide badge multiple times as Spline loads (more frequent checks)
       const intervals = [0, 100, 200, 300, 500, 750, 1000, 1500, 2000, 3000, 5000];
       const timeouts = intervals.map((delay) => setTimeout(hideBadge, delay));
-      
+
       // Observe shadow DOM changes with throttling
       let hideBadgeTimeout: NodeJS.Timeout | null = null;
       const observer = new MutationObserver(() => {
@@ -174,14 +254,14 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
           hideBadge();
         }, 50);
       });
-      
+
       let checkShadowRoot: NodeJS.Timeout | null = null;
-      
+
       // Wait for shadow DOM to be available
       checkShadowRoot = setInterval(() => {
         if (splineViewer.shadowRoot) {
-          observer.observe(splineViewer.shadowRoot, { 
-            childList: true, 
+          observer.observe(splineViewer.shadowRoot, {
+            childList: true,
             subtree: true,
             attributes: true,
           });
@@ -191,10 +271,10 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
           }
         }
       }, 100);
-      
+
       // Also observe the element itself
-      observer.observe(splineViewer, { 
-        childList: true, 
+      observer.observe(splineViewer, {
+        childList: true,
         subtree: true,
         attributes: true,
       });
@@ -212,42 +292,28 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       };
     };
 
-    // If Spline is already loaded, create viewer immediately
-    if (checkSplineLoaded()) {
-      cleanupRef.current = createSplineViewer();
-    } else {
-      // Wait for script to load (check every 100ms, max 5 seconds)
-      let attempts = 0;
-      const maxAttempts = 50;
-      const checkInterval = setInterval(() => {
-        attempts++;
-        if (checkSplineLoaded()) {
-          clearInterval(checkInterval);
-          cleanupRef.current = createSplineViewer();
-        } else if (attempts >= maxAttempts) {
-          clearInterval(checkInterval);
-          console.warn('Spline viewer script failed to load');
-        }
-      }, 100);
+    let cancelled = false;
 
-      return () => {
-        clearInterval(checkInterval);
-        if (cleanupRef.current) {
-          cleanupRef.current();
-        }
-      };
-    }
+    loadSplineScript()
+      .then(() => {
+        if (cancelled) return;
+        cleanupRef.current = createSplineViewer();
+      })
+      .catch((error) => {
+        console.warn('Spline viewer script failed to load', error);
+      });
 
     return () => {
+      cancelled = true;
       if (cleanupRef.current) {
         cleanupRef.current();
       }
     };
-  }, [url, className, style]);
+  }, [className, shouldLoad, style, url]);
 
   return (
-    <div 
-      ref={containerRef} 
+    <div
+      ref={containerRef}
       className="w-full h-full"
       style={{
         position: 'relative',
