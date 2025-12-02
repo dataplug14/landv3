@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
+let sharedScriptPromise: Promise<void> | null = null;
+
 interface SplineViewerProps {
   url: string;
   className?: string;
@@ -12,7 +14,6 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const splineViewerRef = useRef<HTMLElement | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
-  const scriptPromiseRef = useRef<Promise<void> | null>(null);
   const [shouldLoad, setShouldLoad] = useState(() => {
     if (typeof window === 'undefined') return false;
     return !('IntersectionObserver' in window);
@@ -51,44 +52,62 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
     };
 
     const loadSplineScript = () => {
-      if (checkSplineLoaded()) return Promise.resolve();
-      if (scriptPromiseRef.current) return scriptPromiseRef.current;
+      if (checkSplineLoaded()) {
+        sharedScriptPromise = sharedScriptPromise ?? Promise.resolve();
+        return sharedScriptPromise;
+      }
+      if (sharedScriptPromise) return sharedScriptPromise;
 
       const existingScript = document.querySelector<HTMLScriptElement>('script[data-spline-viewer]');
       if (existingScript) {
-        scriptPromiseRef.current = new Promise((resolve, reject) => {
-          if (existingScript.dataset.loaded === 'true' || checkSplineLoaded()) {
+        if (existingScript.dataset.loaded === 'true' || checkSplineLoaded()) {
+          sharedScriptPromise = Promise.resolve();
+          return sharedScriptPromise;
+        }
+
+        sharedScriptPromise = new Promise((resolve, reject) => {
+          const handleLoad = () => {
+            existingScript.dataset.loaded = 'true';
             resolve();
-            return;
-          }
-          existingScript.addEventListener('load', () => resolve(), { once: true });
-          existingScript.addEventListener('error', () => reject(new Error('Failed to load Spline viewer script')), {
-            once: true,
-          });
+          };
+
+          const handleError = () => reject(new Error('Failed to load Spline viewer script'));
+
+          existingScript.addEventListener('load', handleLoad, { once: true });
+          existingScript.addEventListener('error', handleError, { once: true });
         });
-        return scriptPromiseRef.current;
+
+        return sharedScriptPromise;
       }
 
-      scriptPromiseRef.current = new Promise((resolve, reject) => {
+      sharedScriptPromise = new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = 'https://unpkg.com/@splinetool/viewer@1.10.99/build/spline-viewer.js';
         script.type = 'module';
         script.crossOrigin = 'anonymous';
         script.dataset.splineViewer = 'true';
 
-        script.addEventListener('load', () => {
-          script.dataset.loaded = 'true';
-          resolve();
-        });
+        script.addEventListener(
+          'load',
+          () => {
+            script.dataset.loaded = 'true';
+            resolve();
+          },
+          { once: true }
+        );
 
-        script.addEventListener('error', () => {
-          reject(new Error('Failed to load Spline viewer script'));
-        });
+        script.addEventListener(
+          'error',
+          () => {
+            reject(new Error('Failed to load Spline viewer script'));
+          },
+          { once: true }
+        );
 
         document.body.appendChild(script);
       });
 
-      return scriptPromiseRef.current;
+      return sharedScriptPromise;
     };
 
     const createSplineViewer = (): (() => void) => {
