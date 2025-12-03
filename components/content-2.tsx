@@ -36,15 +36,15 @@ export default function ContentSection() {
                                 src="https://ik.imagekit.io/nubis/2150690154.jpg"
                                 className="hidden rounded-[12px] dark:block w-full h-auto"
                                 alt="Cloud infrastructure dashboard dark"
-                                width={1207}
-                                height={929}
+                                width={1000}
+                                height={667}
                             />
                             <Image
                                 src="https://ik.imagekit.io/nubis/2150690154.jpg"
                                 className="rounded-[12px] shadow dark:hidden w-full h-auto"
                                 alt="Cloud infrastructure dashboard light"
-                                width={1207}
-                                height={929}
+                                width={1000}
+                                height={667}
                             />
                         </div>
                     </div>

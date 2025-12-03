@@ -79,7 +79,7 @@ export default function FooterSection() {
                         <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" className="w-[250px] h-[54px]" width="250" height="54" />
                     </a>
                     <a href="https://nxgntools.com/tools/nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
-                        <img src="https://nxgntools.com/api/embed/nubis?type=FEATURED_ON" alt="NextGen Tools Badge" className="h-12 w-auto" />
+                        <img src="https://nxgntools.com/api/embed/nubis?type=FEATURED_ON" alt="NextGen Tools Badge" className="h-12 w-auto" width="168" height="48" />
                     </a>
                 </div>
                 <div className="w-full mt-8 flex flex-col gap-4">
@@ -87,12 +87,12 @@ export default function FooterSection() {
                         © 2025 Nubis, all rights reserved.
                     </span>
                     <div className="relative z-10">
-                        <iframe 
-                            src="https://status.usenubis.com/badge?theme=dark" 
-                            width="250" 
-                            height="30" 
-                            frameBorder="0" 
-                            scrolling="no" 
+                        <iframe
+                            src="https://status.usenubis.com/badge?theme=dark"
+                            width="250"
+                            height="30"
+                            frameBorder="0"
+                            scrolling="no"
                             style={{ colorScheme: 'normal' }}
                             title="Nubis Service Status"
                         />

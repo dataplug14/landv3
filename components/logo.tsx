@@ -1,29 +1,36 @@
 import { cn } from '@/lib/utils'
 
+import Image from 'next/image'
+import logoLight from '@/public/nubis-logo-light.png'
+import logoDark from '@/public/nubis-logo-dark.png'
+
 const baseLogoClassName = 'h-8 w-auto object-contain sm:h-9 lg:h-10'
 
 export const Logo = ({ className, uniColor }: { className?: string; uniColor?: boolean }) => {
     if (uniColor) {
         return (
-            <img
-                src="/main-logo (1).png"
+            <Image
+                src={logoDark}
                 alt="Nubis logo"
                 className={cn(baseLogoClassName, className)}
+                priority
             />
         )
     }
 
     return (
         <>
-            <img
-                src="/main-light (1).png"
+            <Image
+                src={logoLight}
                 alt="Nubis logo"
                 className={cn('block', baseLogoClassName, 'dark:hidden', className)}
+                priority
             />
-            <img
-                src="/main-logo%20(1).png"
+            <Image
+                src={logoDark}
                 alt="Nubis logo"
                 className={cn('hidden', baseLogoClassName, 'dark:block', className)}
+                priority
             />
         </>
     )

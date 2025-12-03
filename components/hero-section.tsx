@@ -108,7 +108,7 @@ function VideoPlayer() {
             onMouseLeave={() => !isMobile && setShowControls(false)}
             onTouchStart={() => setShowControls(!showControls)}
             onClick={togglePlay}>
-            
+
             {/* Video Element */}
             <video
                 ref={videoRef}
@@ -138,7 +138,7 @@ function VideoPlayer() {
 
             {/* Controls Bar */}
             <div className={`absolute bottom-0 left-0 right-0 p-3 sm:p-4 md:p-6 flex items-center justify-between transition-all duration-300 ${showControls || isMobile ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
-                
+
                 {/* Left Controls */}
                 <div className="flex items-center gap-2 sm:gap-3">
                     <button
@@ -342,7 +342,7 @@ export default function HeroSection() {
                                 ...transitionVariants,
                             }}>
                             <div className="mask-b-from-55% relative mt-6 sm:mt-8 md:mt-12 lg:mt-20 overflow-hidden px-3 sm:px-4 md:px-6 lg:px-2">
-                                
+
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto mt-4 sm:mt-6 max-w-6xl overflow-hidden rounded-xl sm:rounded-2xl border p-1.5 sm:p-2 md:p-3 lg:p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <VideoPlayer />
                                 </div>
@@ -440,8 +440,8 @@ export default function HeroSection() {
                     </div>
                 </section>
             </main>
-            
+
         </>
     )
-    
+
 }

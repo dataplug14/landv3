@@ -28,7 +28,10 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       (entries) => {
         const isVisible = entries.some((entry) => entry.isIntersecting);
         if (isVisible) {
-          setShouldLoad(true);
+          // Delay loading to prioritize LCP
+          setTimeout(() => {
+            setShouldLoad(true);
+          }, 1500);
           observer.disconnect();
         }
       },
@@ -111,7 +114,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
     };
 
     const createSplineViewer = (): (() => void) => {
-      if (!containerRef.current) return () => {};
+      if (!containerRef.current) return () => { };
 
       const splineViewer = document.createElement('spline-viewer') as HTMLElement;
       splineViewer.setAttribute('url', url);
