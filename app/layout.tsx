@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
+import Script from "next/script";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -79,11 +80,29 @@ export default async function RootLayout({
 }>) {
   const headerList = await headers();
   const nonce = headerList.get("x-nonce") ?? undefined;
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${quicksand.variable} font-sans antialiased dark:bg-background dark:text-foreground overflow-x-hidden`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {gaMeasurementId ? (
+            <>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+                strategy="afterInteractive"
+                nonce={nonce}
+              />
+              <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
+                {`
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${gaMeasurementId}');
+                `}
+              </Script>
+            </>
+          ) : null}
           {children}
         </ThemeProvider>
       </body>
