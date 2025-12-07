@@ -14,11 +14,11 @@ const generateNonce = () => {
 const buildContentSecurityPolicy = (nonce: string) =>
   [
     "default-src 'self';",
-    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com;`,
+    `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://www.googletagmanager.com https://www.google-analytics.com;`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
-    "img-src 'self' data: blob: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com https://app.spline.design https://prod.spline.design https://nxgntools.com;",
+    "img-src 'self' data: blob: https://ik.imagekit.io https://html.tailus.io https://startupfa.me https://api.producthunt.com https://app.spline.design https://prod.spline.design https://nxgntools.com https://www.google-analytics.com https://www.googletagmanager.com;",
     "font-src 'self' data: https://fonts.gstatic.com;",
-    "connect-src 'self' https://prod.spline.design https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com https://static.cloudflareinsights.com wss: ws:;",
+    "connect-src 'self' https://prod.spline.design https://unpkg.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://www.gstatic.com https://static.cloudflareinsights.com https://www.google-analytics.com https://www.googletagmanager.com wss: ws:;",
     "worker-src 'self' blob: data: https://prod.spline.design;",
     "frame-src 'self' https://prod.spline.design https://my.spline.design https://unpkg.com https://cdn.jsdelivr.net https://status.usenubis.com;",
     "object-src 'none';",
