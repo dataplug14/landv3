@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { GoogleAnalytics } from "@/components/google-analytics";
 
 
 const quicksand = Quicksand({
@@ -86,6 +87,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
+        <GoogleAnalytics nonce={nonce} />
       </body>
     </html>
   );
