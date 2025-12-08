@@ -19,6 +19,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://usenubis.com"),
   title: "Nubis",
   description: "Nubis is a cloud platform for building and deploying applications. Features include elastic compute, block storage, load balancing and firewall, and GitHub Actions runners. Choose our managed or self-hosted solutions to cut cloud costs by 3–10x. (Nubis is not yet open source.)",
   keywords: [
