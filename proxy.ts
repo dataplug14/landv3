@@ -27,7 +27,7 @@ const buildContentSecurityPolicy = (nonce: string) =>
     "upgrade-insecure-requests;",
   ].join(" ");
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const nonce = generateNonce();
 
   const requestHeaders = new Headers(request.headers);
