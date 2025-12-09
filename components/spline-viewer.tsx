@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 let sharedScriptPromise: Promise<void> | null = null;
 
@@ -14,37 +14,71 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const splineViewerRef = useRef<HTMLElement | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(() => {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
     if (typeof window === 'undefined') return false;
-    return !('IntersectionObserver' in window);
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(min-width: 1024px)').matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const desktopQuery = window.matchMedia('(min-width: 1024px)');
+
+    const handleMotionChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
+    const handleDesktopChange = (event: MediaQueryListEvent) => setIsDesktop(event.matches);
+
+    motionQuery.addEventListener('change', handleMotionChange);
+    desktopQuery.addEventListener('change', handleDesktopChange);
+
+    return () => {
+      motionQuery.removeEventListener('change', handleMotionChange);
+      desktopQuery.removeEventListener('change', handleDesktopChange);
+    };
+  }, []);
+
+  const allowSpline = useMemo(() => isDesktop && !prefersReducedMotion, [isDesktop, prefersReducedMotion]);
 
   // Defer loading until the viewer is near the viewport to reduce initial payload.
   useEffect(() => {
-    if (!containerRef.current || typeof window === 'undefined') return;
-    if (!('IntersectionObserver' in window)) return;
+    if (!containerRef.current || typeof window === 'undefined' || !allowSpline) return;
+
+    const scheduleLoad = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(() => setShouldLoad(true), { timeout: 1500 });
+      } else {
+        setTimeout(() => setShouldLoad(true), 750);
+      }
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      scheduleLoad();
+      return;
+    }
 
     const observer = new IntersectionObserver(
       (entries) => {
         const isVisible = entries.some((entry) => entry.isIntersecting);
         if (isVisible) {
-          // Delay loading to prioritize LCP
-          setTimeout(() => {
-            setShouldLoad(true);
-          }, 1500);
+          scheduleLoad();
           observer.disconnect();
         }
       },
-      { rootMargin: '200px 0px', threshold: 0.1 }
+      { rootMargin: '280px 0px', threshold: 0.05 }
     );
 
     observer.observe(containerRef.current);
 
     return () => observer.disconnect();
-  }, []);
+  }, [allowSpline]);
 
   useEffect(() => {
-    if (!containerRef.current || typeof window === 'undefined' || !shouldLoad) return;
+    if (!containerRef.current || typeof window === 'undefined' || !shouldLoad || !allowSpline) return;
 
     const checkSplineLoaded = () => {
       try {
@@ -243,7 +277,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
       };
 
       // Hide badge multiple times as Spline loads (more frequent checks)
-      const intervals = [0, 100, 200, 300, 500, 750, 1000, 1500, 2000, 3000, 5000];
+      const intervals = [0, 250, 750, 1500];
       const timeouts = intervals.map((delay) => setTimeout(hideBadge, delay));
 
       // Observe shadow DOM changes with throttling
@@ -312,7 +346,7 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
         cleanupRef.current();
       }
     };
-  }, [className, shouldLoad, style, url]);
+  }, [allowSpline, className, shouldLoad, style, url]);
 
   return (
     <div
