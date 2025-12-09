@@ -15,20 +15,18 @@ export function SplineViewer({ url, className, style }: SplineViewerProps) {
   const splineViewerRef = useRef<HTMLElement | null>(null);
   const cleanupRef = useRef<(() => void) | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  });
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    return window.matchMedia('(min-width: 1024px)').matches;
-  });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const desktopQuery = window.matchMedia('(min-width: 1024px)');
+
+    // Sync initial values on mount to avoid hydration mismatches.
+    setPrefersReducedMotion(motionQuery.matches);
+    setIsDesktop(desktopQuery.matches);
 
     const handleMotionChange = (event: MediaQueryListEvent) => setPrefersReducedMotion(event.matches);
     const handleDesktopChange = (event: MediaQueryListEvent) => setIsDesktop(event.matches);
