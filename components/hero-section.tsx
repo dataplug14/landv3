@@ -116,7 +116,7 @@ function VideoPlayer() {
                 loop
                 muted={isMuted}
                 playsInline
-                preload="metadata">
+                preload="none">
                 <source src="/nubis demo.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
@@ -367,6 +367,7 @@ export default function HeroSection() {
                                     className="mx-auto h-5 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/nvidia.svg"
                                     alt="Nvidia Logo"
+                                    loading="lazy"
                                     height="20"
                                     width="auto"
                                 />
@@ -377,6 +378,7 @@ export default function HeroSection() {
                                     className="mx-auto h-4 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/column.svg"
                                     alt="Column Logo"
+                                    loading="lazy"
                                     height="16"
                                     width="auto"
                                 />
@@ -386,6 +388,7 @@ export default function HeroSection() {
                                     className="mx-auto h-4 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/github.svg"
                                     alt="GitHub Logo"
+                                    loading="lazy"
                                     height="16"
                                     width="auto"
                                 />
@@ -395,6 +398,7 @@ export default function HeroSection() {
                                     className="mx-auto h-5 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/nike.svg"
                                     alt="Nike Logo"
+                                    loading="lazy"
                                     height="20"
                                     width="auto"
                                 />
@@ -404,6 +408,7 @@ export default function HeroSection() {
                                     className="mx-auto h-5 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
                                     alt="Lemon Squeezy Logo"
+                                    loading="lazy"
                                     height="20"
                                     width="auto"
                                 />
@@ -413,6 +418,7 @@ export default function HeroSection() {
                                     className="mx-auto h-4 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/laravel.svg"
                                     alt="Laravel Logo"
+                                    loading="lazy"
                                     height="16"
                                     width="auto"
                                 />
@@ -422,6 +428,7 @@ export default function HeroSection() {
                                     className="mx-auto h-7 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/lilly.svg"
                                     alt="Lilly Logo"
+                                    loading="lazy"
                                     height="28"
                                     width="auto"
                                 />
@@ -432,6 +439,7 @@ export default function HeroSection() {
                                     className="mx-auto h-6 w-fit dark:invert"
                                     src="https://html.tailus.io/blocks/customers/openai.svg"
                                     alt="OpenAI Logo"
+                                    loading="lazy"
                                     height="24"
                                     width="auto"
                                 />
