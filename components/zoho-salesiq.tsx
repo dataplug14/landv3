@@ -1,22 +1,22 @@
 "use client";
 
 import Script from "next/script";
+import { useEffect } from "react";
 
 export function ZohoSalesIQ() {
+    useEffect(() => {
+        // Initialize Zoho SalesIQ global object before script loads
+        (window as any).$zoho = (window as any).$zoho || {};
+        (window as any).$zoho.salesiq = (window as any).$zoho.salesiq || {
+            ready: function () { },
+        };
+    }, []);
+
     return (
-        <>
-            <Script
-                id="zoho-salesiq-init"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                    __html: `window.$zoho=window.$zoho || {};$zoho.salesiq=$zoho.salesiq||{ready:function(){}}`,
-                }}
-            />
-            <Script
-                id="zsiqscript"
-                src="https://salesiq.zohopublic.com/widget?wc=siq8bf24395152774bf736a8b92c0806fc4"
-                strategy="afterInteractive"
-            />
-        </>
+        <Script
+            id="zsiqscript"
+            src="https://salesiq.zohopublic.com/widget?wc=siq8bf24395152774bf736a8b92c0806fc4"
+            strategy="lazyOnload"
+        />
     );
 }
