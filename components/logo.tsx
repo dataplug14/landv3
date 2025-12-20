@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils'
 
 import Image from 'next/image'
-import logoLight from '@/public/nubis-logo-light.png'
-import logoDark from '@/public/nubis-logo-dark.png'
+import logoLight from '@/public/sec.png'
+import logoDark from '@/public/main.png'
 
 const baseLogoClassName = 'h-8 w-auto object-contain sm:h-9 lg:h-10'
 
