@@ -78,8 +78,18 @@ export default function FooterSection() {
                     <a href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
                         <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" className="w-[250px] h-[54px]" width="250" height="54" />
                     </a>
-                    <a href="https://nxgntools.com/tools/nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
-                        <img src="https://nxgntools.com/api/embed/nubis?type=FEATURED_ON" alt="NextGen Tools Badge" className="h-12 w-auto" width="168" height="48" />
+                    <a
+                        href="https://peerpush.net/p/nubis"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-10"
+                        style={{ width: '230px' }}
+                    >
+                        <img
+                            src="https://peerpush.net/p/nubis/badge.png"
+                            alt="Nubis badge"
+                            style={{ width: '230px' }}
+                        />
                     </a>
                 </div>
                 <div className="w-full mt-8 flex flex-col gap-4">
