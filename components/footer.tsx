@@ -83,12 +83,13 @@ export default function FooterSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="relative z-10"
-                        style={{ width: '230px' }}
                     >
                         <img
                             src="https://peerpush.net/p/nubis/badge.png"
                             alt="Nubis badge"
-                            style={{ width: '230px' }}
+                            className="w-[230px] h-[54px]"
+                            width={230}
+                            height={54}
                         />
                     </a>
                 </div>
