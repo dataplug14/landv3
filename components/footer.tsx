@@ -163,7 +163,7 @@ export default function FooterSection() {
                             />
                         </a>
                         <a 
-                            href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" 
+                            href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge" 
                             target="_blank" 
                             rel="noopener noreferrer" 
                             className="transition-opacity hover:opacity-80"
