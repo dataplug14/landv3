@@ -2,25 +2,25 @@ export default function StatsSection() {
     return (
         <section className="py-12 md:py-20">
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
-                <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
-                    <h2 className="text-4xl font-medium lg:text-5xl">Company Statistics</h2>
+                <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
+                    <h2 className="text-4xl font-medium lg:text-5xl">Platform Capabilities</h2>
                     <p>
-                        We provide cloud infrastructure that helps organizations deploy, manage, and scale their applications reliably and securely.
+                        Nubis provides enterprise-grade cloud infrastructure with the performance, reliability, and security required for production workloads. Our platform serves development teams and organizations deploying applications at scale.
                     </p>
                 </div>
 
                 <div className="grid gap-12 divide-y *:text-center md:grid-cols-3 md:gap-2 md:divide-x md:divide-y-0">
                     <div className="space-y-4">
-                        <div className="text-5xl font-bold">2024</div>
-                        <p>Founded</p>
+                        <div className="text-5xl font-bold">99.95%</div>
+                        <p>Uptime SLA for Production</p>
                     </div>
                     <div className="space-y-4">
-                        <div className="text-5xl font-bold">Stealth</div>
-                        <p>Currently In</p>
+                        <div className="text-5xl font-bold">Multiple</div>
+                        <p>Availability Zones</p>
                     </div>
                     <div className="space-y-4">
-                        <div className="text-5xl font-bold">Open Beta</div>
-                        <p>Launching Soon</p>
+                        <div className="text-5xl font-bold">24/7</div>
+                        <p>Technical Support</p>
                     </div>
                 </div>
             </div>

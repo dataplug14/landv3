@@ -278,7 +278,7 @@ export default function HeroSection() {
                                     speedSegment={0.3}
                                     as="h1"
                                     className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]">
-                                    Accelerate Cloud Innovation with Nubis
+                                    Enterprise Cloud Infrastructure Platform
                                 </TextEffect>
                                 <TextEffect
                                     per="line"
@@ -286,8 +286,8 @@ export default function HeroSection() {
                                     speedSegment={0.3}
                                     delay={0.5}
                                     as="p"
-                                    className="mx-auto mt-8 max-w-2xl text-balance text-lg">
-                                    Nubis allows anyone to deploy their website, app, or workflow to the cloud.
+                                    className="mx-auto mt-8 max-w-3xl text-balance text-lg">
+                                    Nubis is a comprehensive cloud computing platform that provides on-demand infrastructure services including virtual machines, storage, networking, and databases. Deploy, manage, and scale applications with enterprise-grade reliability, security, and performance.
                                 </TextEffect>
 
                                 <AnimatedGroup

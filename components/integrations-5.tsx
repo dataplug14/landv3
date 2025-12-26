@@ -49,8 +49,8 @@ export default function IntegrationsSection() {
                         </div>
                     </div>
                     <div className="bg-linear-to-t from-background relative z-20 mx-auto mt-12 max-w-lg space-y-6 from-55% text-center">
-                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Infrastructure and platform integrations</h2>
-                        <p className="text-muted-foreground">Support for standard APIs and protocols across cloud platforms, development tools, and enterprise systems.</p>
+                        <h2 className="text-balance text-3xl font-semibold md:text-4xl">Seamless Platform Integrations</h2>
+                        <p className="text-muted-foreground">Connect with existing development workflows and enterprise systems. Our platform supports REST APIs, Terraform, Kubernetes, Docker, CI/CD pipelines, monitoring tools, and authentication providers. Build on standard protocols and open-source technologies.</p>
 
                         <Button
                             variant="outline"
