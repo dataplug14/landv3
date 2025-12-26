@@ -5,28 +5,28 @@ export default function ContentSection() {
     return (
         <section className="py-16 md:py-32">
             <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
-                <h2 className="relative z-10 max-w-xl text-4xl font-medium lg:text-5xl">Infrastructure built for production workloads.</h2>
+                <h2 className="relative z-10 max-w-3xl text-4xl font-medium lg:text-5xl">Complete Cloud Platform for Modern Applications</h2>
                 <div className="relative">
                     <div className="relative z-10 space-y-4 md:w-1/2">
                         <p>
-                            Nubis provides <span className="font-medium">reliable infrastructure services</span> — from compute instances to storage and networking.
+                            Nubis provides <span className="font-medium">comprehensive cloud infrastructure services</span> — virtual machines, block and object storage, managed databases, load balancers, virtual private networks, and container orchestration.
                         </p>
-                        <p>Built for teams that need consistent performance and straightforward management. Deploy applications, manage databases, and scale resources through our web console or API.</p>
+                        <p>Built for development teams, enterprises, and organizations requiring reliable infrastructure. Access resources through our RESTful API, command-line interface, or web-based management console. Integrate with CI/CD pipelines, infrastructure-as-code tools, and monitoring systems.</p>
 
                         <div className="grid grid-cols-2 gap-3 pt-6 sm:gap-4">
                             <div className="space-y-3">
                                 <div className="flex items-center gap-2">
                                     <Zap className="size-4" />
-                                    <h3 className="text-sm font-medium">Fast</h3>
+                                    <h3 className="text-sm font-medium">High Performance</h3>
                                 </div>
-                                <p className="text-muted-foreground text-sm">Low-latency networks and solid-state storage for responsive applications.</p>
+                                <p className="text-muted-foreground text-sm">NVMe SSD storage, high-bandwidth networking, and AMD EPYC processors for compute-intensive workloads.</p>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex items-center gap-2">
                                     <Cpu className="size-4" />
-                                    <h3 className="text-sm font-medium">Scalable</h3>
+                                    <h3 className="text-sm font-medium">Auto-Scaling</h3>
                                 </div>
-                                <p className="text-muted-foreground text-sm">Add or remove resources as your workload changes.</p>
+                                <p className="text-muted-foreground text-sm">Automatically adjust resources based on traffic and load. Pay only for what you use.</p>
                             </div>
                         </div>
                     </div>

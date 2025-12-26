@@ -7,8 +7,8 @@ export default function Features() {
         <section className="bg-zinc-50 py-16 md:py-32 dark:bg-transparent">
             <div className="@container mx-auto max-w-5xl px-6">
                 <div className="text-center">
-                    <h2 className="text-balance text-4xl font-semibold lg:text-5xl">Infrastructure that scales with your business</h2>
-                    <p className="mt-4">Reliable cloud infrastructure designed to support your applications and workloads without the complexity of managing hardware.</p>
+                    <h2 className="text-balance text-4xl font-semibold lg:text-5xl">Enterprise Cloud Services</h2>
+                    <p className="mt-4 text-lg max-w-3xl mx-auto">Nubis delivers production-ready cloud infrastructure services for deploying and managing applications at scale. Our platform provides compute, storage, networking, and database services accessible through a unified API and web console.</p>
                 </div>
                 <Card className="@min-4xl:max-w-full @min-4xl:grid-cols-3 @min-4xl:divide-x @min-4xl:divide-y-0 mx-auto mt-8 grid max-w-sm divide-y overflow-hidden shadow-zinc-950/5 *:text-center md:mt-16">
                     <div className="group shadow-zinc-950/5">
@@ -20,11 +20,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Scalable Infrastructure</h3>
+                            <h3 className="mt-6 font-medium">Elastic Compute</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="text-sm">Scale compute and storage resources based on demand. Adjust capacity in minutes without hardware procurement or long-term commitments.</p>
+                            <p className="text-sm">Deploy virtual machines with configurable CPU, memory, and storage. Provision Linux and Windows instances with automated scaling capabilities, supporting workloads from development to production environments.</p>
                         </CardContent>
                     </div>
 
@@ -37,11 +37,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">Secure by Default</h3>
+                            <h3 className="mt-6 font-medium">Enterprise Security</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">Built-in security controls and compliance features. Network isolation, encryption at rest and in transit, and automated security monitoring.</p>
+                            <p className="mt-3 text-sm">Multi-layered security architecture with network isolation, encryption for data at rest and in transit, identity and access management (IAM), DDoS protection, and compliance with industry standards including SOC 2 and GDPR.</p>
                         </CardContent>
                     </div>
 
@@ -54,11 +54,11 @@ export default function Features() {
                                 />
                             </CardDecorator>
 
-                            <h3 className="mt-6 font-medium">High Availability</h3>
+                            <h3 className="mt-6 font-medium">Global Infrastructure</h3>
                         </CardHeader>
 
                         <CardContent>
-                            <p className="mt-3 text-sm">Deploy across multiple data centers with automatic failover. Service level agreements guarantee uptime for mission-critical applications.</p>
+                            <p className="mt-3 text-sm">Deploy applications across multiple availability zones and data centers with automated failover and load balancing. 99.95% uptime SLA for critical workloads with redundant power, networking, and storage systems.</p>
                         </CardContent>
                     </div>
                 </Card>
