@@ -1,17 +1,33 @@
 import Link from 'next/link'
+import { Mail } from 'lucide-react'
 
-const navLinks = [
-    { title: 'Home', href: '/' },
+const productLinks = [
+    { title: 'Compute', href: 'https://docs.usenubis.com/compute' },
+    { title: 'Storage', href: 'https://docs.usenubis.com/storage' },
+    { title: 'Networking', href: 'https://docs.usenubis.com/networking' },
+    { title: 'Databases', href: 'https://docs.usenubis.com/databases' },
+    { title: 'Console', href: 'https://console.usenubis.com' },
+]
+
+const companyLinks = [
+    { title: 'About', href: '/about' },
+    { title: 'Contact', href: '/contact' },
+    { title: 'Careers', href: '/about' },
+    { title: 'Blog', href: '/' },
+]
+
+const resourceLinks = [
     { title: 'Documentation', href: 'https://docs.usenubis.com' },
+    { title: 'API Reference', href: 'https://docs.usenubis.com/api' },
     { title: 'Status', href: 'https://status.usenubis.com' },
-    { title: 'Security', href: '/security' },
-    { title: 'Contact', href: '/contact' }
+    { title: 'Support', href: '/contact' },
 ]
 
 const legalLinks = [
     { title: 'Privacy Policy', href: '/privacy' },
     { title: 'Terms of Service', href: '/terms' },
-    { title: 'Acceptable Use', href: '/acceptable-use' }
+    { title: 'Acceptable Use', href: '/acceptable-use' },
+    { title: 'Security', href: '/security' },
 ]
 
 const socialLinks = [
@@ -33,71 +49,156 @@ const socialLinks = [
 
 export default function FooterSection() {
     return (
-        <footer className="relative z-10 border-t bg-white py-12 dark:bg-transparent">
-            <div className="mx-auto max-w-5xl px-6 flex flex-col items-center gap-8">
-                <nav className="flex flex-wrap justify-center gap-7 text-sm">
-                    {navLinks.map((link, i) => (
-                        <Link
-                            key={i}
-                            href={link.href}
-                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
-                        >
-                            {link.title}
+        <footer className="relative z-10 border-t bg-white dark:bg-transparent">
+            <div className="mx-auto max-w-7xl px-6 py-16">
+                {/* Main Footer Content */}
+                <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6 pb-12 border-b">
+                    {/* Brand & Mission */}
+                    <div className="col-span-2 md:col-span-3 lg:col-span-2">
+                        <Link href="/" className="inline-block mb-4">
+                            <span className="text-2xl font-bold text-primary">Nubis</span>
                         </Link>
-                    ))}
-                </nav>
-                <nav className="flex flex-wrap justify-center gap-6 text-sm border-t pt-8 w-full">
-                    {legalLinks.map((link, i) => (
-                        <Link
-                            key={i}
-                            href={link.href}
-                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
+                        <p className="text-sm text-muted-foreground mb-4 max-w-sm">
+                            Enterprise cloud infrastructure built for developers. Addressing the complexity and cost challenges of traditional cloud providers with transparent pricing and developer-first design.
+                        </p>
+                        <div className="flex items-center gap-4">
+                            {socialLinks.map(({ name, href, icon }) => (
+                                <a
+                                    key={name}
+                                    href={href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={name}
+                                    className="text-muted-foreground hover:text-primary transition-colors duration-150"
+                                >
+                                    {icon}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Product */}
+                    <div>
+                        <h3 className="text-sm font-semibold mb-4">Product</h3>
+                        <ul className="space-y-3">
+                            {productLinks.map((link, i) => (
+                                <li key={i}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150"
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Company */}
+                    <div>
+                        <h3 className="text-sm font-semibold mb-4">Company</h3>
+                        <ul className="space-y-3">
+                            {companyLinks.map((link, i) => (
+                                <li key={i}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150"
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Resources */}
+                    <div>
+                        <h3 className="text-sm font-semibold mb-4">Resources</h3>
+                        <ul className="space-y-3">
+                            {resourceLinks.map((link, i) => (
+                                <li key={i}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150"
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div>
+                        <h3 className="text-sm font-semibold mb-4">Legal</h3>
+                        <ul className="space-y-3">
+                            {legalLinks.map((link, i) => (
+                                <li key={i}>
+                                    <Link
+                                        href={link.href}
+                                        className="text-sm text-muted-foreground hover:text-primary transition-colors duration-150"
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Trust Signals & Badges */}
+                <div className="py-8 border-b">
+                    <div className="flex flex-wrap items-center justify-center gap-6">
+                        <a 
+                            href="https://startupfa.me/s/nubis?utm_source=usenubis.com" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="transition-opacity hover:opacity-80"
                         >
-                            {link.title}
-                        </Link>
-                    ))}
-                </nav>
-                <div className="flex items-center justify-center gap-6 mt-2">
-                    {socialLinks.map(({ name, href, icon }) => (
+                            <img 
+                                src="https://startupfa.me/badges/featured/default-rounded.webp" 
+                                alt="Nubis - Featured on Startup Fame" 
+                                width="171" 
+                                height="54" 
+                            />
+                        </a>
+                        <a 
+                            href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="transition-opacity hover:opacity-80"
+                        >
+                            <img 
+                                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" 
+                                alt="Nubis - Cloud infrastructure built for developers | Product Hunt" 
+                                className="w-[250px] h-[54px]" 
+                                width="250" 
+                                height="54" 
+                            />
+                        </a>
                         <a
-                            key={name}
-                            href={href}
+                            href="https://peerpush.net/p/nubis"
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={name}
-                            className="relative z-10 text-muted-foreground hover:text-primary duration-150"
+                            className="transition-opacity hover:opacity-80"
                         >
-                            {icon}
+                            <img
+                                src="https://peerpush.net/p/nubis/badge.png"
+                                alt="Nubis badge"
+                                className="w-[230px] h-[54px]"
+                                width={230}
+                                height={54}
+                            />
                         </a>
-                    ))}
+                    </div>
                 </div>
-                <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
-                    <a href="https://startupfa.me/s/nubis?utm_source=usenubis.com" target="_blank" rel="noopener noreferrer" className="relative z-10">
-                        <img src="https://startupfa.me/badges/featured/default-rounded.webp" alt="Nubis - Featured on Startup Fame" width="171" height="54" />
-                    </a>
-                    <a href="https://www.producthunt.com/products/nubis?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-nubis" target="_blank" rel="noopener noreferrer" className="relative z-10">
-                        <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1035834&theme=light&t=1762606004933" alt="Nubis - Cloud infrastructure built for developers | Product Hunt" className="w-[250px] h-[54px]" width="250" height="54" />
-                    </a>
-                    <a
-                        href="https://peerpush.net/p/nubis"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="relative z-10"
-                    >
-                        <img
-                            src="https://peerpush.net/p/nubis/badge.png"
-                            alt="Nubis badge"
-                            className="w-[230px] h-[54px]"
-                            width={230}
-                            height={54}
-                        />
-                    </a>
-                </div>
-                <div className="w-full mt-8 flex flex-col gap-4">
-                    <span className="block text-center text-sm text-muted-foreground">
-                        © 2025 Nubis, all rights reserved.
-                    </span>
-                    <div className="relative z-10">
+
+                {/* Bottom Bar */}
+                <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <span className="text-sm text-muted-foreground">
+                            © 2025 Nubis. All rights reserved.
+                        </span>
                         <iframe
                             src="https://status.usenubis.com/badge?theme=dark"
                             width="250"
@@ -106,7 +207,17 @@ export default function FooterSection() {
                             scrolling="no"
                             style={{ colorScheme: 'normal' }}
                             title="Nubis Service Status"
+                            className="hidden md:block"
                         />
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Mail className="size-4" />
+                        <a 
+                            href="mailto:hello@usenubis.com" 
+                            className="hover:text-primary transition-colors duration-150"
+                        >
+                            hello@usenubis.com
+                        </a>
                     </div>
                 </div>
             </div>
