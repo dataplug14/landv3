@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { Mail } from 'lucide-react'
 
 const productLinks = [
-    { title: 'Compute', href: 'https://docs.usenubis.com/compute' },
-    { title: 'Storage', href: 'https://docs.usenubis.com/storage' },
-    { title: 'Networking', href: 'https://docs.usenubis.com/networking' },
-    { title: 'Databases', href: 'https://docs.usenubis.com/databases' },
+    { title: 'Compute', href: '/products/compute' },
+    { title: 'Storage', href: '/products/storage' },
+    { title: 'Networking', href: '/products/networking' },
+    { title: 'Databases', href: '/products/databases' },
     { title: 'Console', href: 'https://console.usenubis.com' },
 ]
 
