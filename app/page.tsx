@@ -6,7 +6,6 @@ import HeroSection from "@/components/hero-section";
 import IntegrationsSection from "@/components/integrations-5";
 import PlatformServices from "@/components/platform-services";
 import StatsSection from "@/components/stats";
-import TestimonialsSection from "@/components/testimonials";
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
       <IntegrationsSection />
       <ContentSection />
       <StatsSection />
-      <TestimonialsSection />
       <CallToAction />
       <FooterSection />
     </>
