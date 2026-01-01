@@ -127,7 +127,7 @@ landv3/
 
 ## License
 
-© 2025 Nubis. All rights reserved.
+This project is © Nubis. All rights reserved.
 
 ---
 

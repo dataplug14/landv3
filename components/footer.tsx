@@ -197,7 +197,7 @@ export default function FooterSection() {
                 <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="flex items-center gap-4">
                         <span className="text-sm text-muted-foreground">
-                            © 2025 Nubis. All rights reserved.
+                            © {new Date().getFullYear()} Nubis. All rights reserved.
                         </span>
                         <iframe
                             src="https://status.usenubis.com/badge?theme=dark"
