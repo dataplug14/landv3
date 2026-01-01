@@ -16,7 +16,7 @@ export default function TermsOfService() {
           <div className="mx-auto max-w-4xl px-6">
             <div className="space-y-6 mb-12">
               <h1 className="text-4xl font-medium lg:text-5xl">Terms of Service</h1>
-              <p className="text-muted-foreground">Last updated: November 10, {new Date().getFullYear()}</p>
+              <p className="text-muted-foreground">Last updated: November 10, 2025</p>
             </div>
 
             <div className="prose prose-slate dark:prose-invert max-w-none">
